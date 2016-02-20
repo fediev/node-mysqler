@@ -430,4 +430,41 @@ describe('Sql', () => {
       });
     });
   });
+  describe('update()', () => {
+    it('should make update sql with string infos', () => {
+      const tb = 'tdb';
+      const infos = 'a = 1';
+      const expected = 'UPDATE `tdb` SET a = 1';
+      Sql.update(tb, infos).should.eql(expected);
+    });
+    it('should make update sql with array infos', () => {
+      const tb = 'tdb';
+      const infos = [ 'a = 1', 'b = c' ];
+      const expected = 'UPDATE `tdb` SET a = 1, b = c';
+      Sql.update(tb, infos).should.eql(expected);
+    });
+    it('should make update sql with object infos', () => {
+      const tb = 'tdb';
+      const infos = { a: 1, b: 'c', d: 'now()' };
+      const expected = "UPDATE `tdb` SET `a` = 1, `b` = 'c', `d` = NOW()";
+      Sql.update(tb, infos).should.eql(expected);
+    });
+    it('should make update sql with infos, wheres, orders', () => {
+      const tb = 'tdb';
+      const infos = { a: 1 };
+      const wheres = { a: 2 };
+      const orders = { a: 'DESC' };
+      const expected = 'UPDATE `tdb` SET `a` = 1 WHERE `a` = 2'
+                     + ' ORDER BY `a` DESC';
+      Sql.update(tb, infos, wheres, orders).should.eql(expected);
+    });
+    it('should make update sql correctly with empty values', () => {
+      const tb = 'tdb';
+      const infos = { a: 1 };
+      const wheres = '';
+      const orders = { a: 'DESC' };
+      const expected = 'UPDATE `tdb` SET `a` = 1 ORDER BY `a` DESC';
+      Sql.update(tb, infos, wheres, orders).should.eql(expected);
+    });
+  });
 });
