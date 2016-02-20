@@ -352,4 +352,52 @@ describe('Sql', () => {
       });
     });
   });
+  describe('select()', () => {
+    it('should make select sql on tb', () => {
+      const tb = 'tdb_select';
+      const expected = 'SELECT * FROM `tdb_select`';
+      Sql.select(tb).should.eql(expected);
+    });
+    it('should make select sql on tb, fields', () => {
+      const tb = 'tdb_select';
+      const fields = [ 'a' ];
+      const expected = 'SELECT `a` FROM `tdb_select`';
+      Sql.select(tb, fields).should.eql(expected);
+    });
+    it('should make select sql on tb, fields, wheres', () => {
+      const tb = 'tdb_select';
+      const fields = [ 'a' ];
+      const wheres = { a: 1 };
+      const expected = 'SELECT `a` FROM `tdb_select` WHERE `a` = 1';
+      Sql.select(tb, fields, wheres).should.eql(expected);
+    });
+    it('should make select sql on tb, fields, wheres, orders', () => {
+      const tb = 'tdb_select';
+      const fields = [ 'a' ];
+      const wheres = { a: 1 };
+      const orders = { a: 'DESC' };
+      const expected = 'SELECT `a` FROM `tdb_select` WHERE `a` = 1'
+                     + ' ORDER BY `a` DESC';
+      Sql.select(tb, fields, wheres, orders).should.eql(expected);
+    });
+    it('should make select sql on tb, fields, wheres, orders, limits', () => {
+      const tb = 'tdb_select';
+      const fields = [ 'a' ];
+      const wheres = { a: 1 };
+      const orders = { a: 'DESC' };
+      const limits = [ 5, 10 ];
+      const expected = 'SELECT `a` FROM `tdb_select` WHERE `a` = 1'
+                     + ' ORDER BY `a` DESC LIMIT 5, 10';
+      Sql.select(tb, fields, wheres, orders, limits).should.eql(expected);
+    });
+    it('should make select sql correctly with empty values', () => {
+      const tb = 'tdb_select';
+      const fields = '';
+      const wheres = '';
+      const orders = '';
+      const limits = [ 5, 10 ];
+      const expected = 'SELECT * FROM `tdb_select` LIMIT 5, 10';
+      Sql.select(tb, fields, wheres, orders, limits).should.eql(expected);
+    });
+  });
 });
