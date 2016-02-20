@@ -1,0 +1,28 @@
+{
+  "name": "node-mysqler",
+  "version": "0.1.0",
+  "description": "node-mysql promise wrapper and helper library",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha",
+    "lint": "eslint lib test",
+    "docs": "jsdoc -d jsdoc lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:fediev/node-mysqler.git"
+  },
+  "keywords": [
+    "mysql"
+  ],
+  "author": "fediev <fediev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.10.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "mocha": "^2.4.5"
+  }
+}
