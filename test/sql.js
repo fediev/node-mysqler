@@ -467,4 +467,17 @@ describe('Sql', () => {
       Sql.update(tb, infos, wheres, orders).should.eql(expected);
     });
   });
+  describe('delete()', () => {
+    it('should make delete sql with tb', () => {
+      const tb = 'tdb';
+      const expected = 'DELETE FROM `tdb`';
+      Sql.delete(tb).should.eql(expected);
+    });
+    it('should make delete sql with tb, wheres', () => {
+      const tb = 'tdb';
+      const wheres = { a: 1 };
+      const expected = 'DELETE FROM `tdb` WHERE `a` = 1';
+      Sql.delete(tb, wheres).should.eql(expected);
+    });
+  });
 });
