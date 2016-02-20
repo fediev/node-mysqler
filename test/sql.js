@@ -247,4 +247,59 @@ describe('Sql', () => {
       });
     });
   });
+  describe('orderBy()', () => {
+    it('should get orders from string', () => {
+      const orders = 'a ASC, b DESC';
+      const expected = 'ORDER BY a ASC, b DESC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get empty string from empty string', () => {
+      const orders = '';
+      const expected = '';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get orders from length = 1 array', () => {
+      const orders = [ 'a ASC' ];
+      const expected = 'ORDER BY a ASC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get orders from length > 1 array', () => {
+      const orders = [ 'a ASC', 'b DESC' ];
+      const expected = 'ORDER BY a ASC, b DESC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get empty string from length = 0 array', () => {
+      const orders = [];
+      const expected = '';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get orders from property count = 1 object', () => {
+      const orders = { a: 'ASC' };
+      const expected = 'ORDER BY `a` ASC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get orders from property count > 1 object', () => {
+      const orders = { a: 'ASC', b: 'DESC' };
+      const expected = 'ORDER BY `a` ASC, `b` DESC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get DESC from object property value false', () => {
+      const orders = { a: false };
+      const expected = 'ORDER BY `a` DESC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get ASC from object property value invalid', () => {
+      const orders = { a: 10 };
+      const expected = 'ORDER BY `a` ASC';
+      Sql.orderBy(orders).should.eql(expected);
+    });
+    it('should get empty string from invalid types', () => {
+      /* eslint no-undefined: 0 */
+      const arr = [ undefined, true, 10, () => {} ];
+      const expected = '';
+      arr.forEach((orders) => {
+        Sql.orderBy(orders).should.eql(expected);
+      });
+    });
+  });
 });
