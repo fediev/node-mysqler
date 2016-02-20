@@ -77,4 +77,67 @@ describe('Sql', () => {
       Sql.selectFields(fields).should.equal(expected);
     });
   });
+  describe('insertInfos()', () => {
+    it('should get empty string and () from non-object', () => {
+      const infos = 'abc';
+      const expected = {
+        fields: '()',
+        values: '()',
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+    it('should get empty string and () from object {}', () => {
+      const infos = {};
+      const expected = {
+        fields: '()',
+        values: '()',
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+    it('should get infos from property count = 1 object', () => {
+      const infos = { a: 1 };
+      const expected = {
+        fields: '(`a`)',
+        values: '(1)',
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+    it('should not escape string NOW()', () => {
+      const infos = { a: 'now()' };
+      const expected = '(NOW())';
+      Sql.insertInfos(infos).values.should.eql(expected);
+    });
+    it('should get infos from property count > 1 object', () => {
+      const infos = { a: 1, b: 'c', d: 'now()' };
+      const expected = {
+        fields: '(`a`, `b`, `d`)',
+        values: "(1, 'c', NOW())",
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+    it('should get infos from length = 0 array', () => {
+      const infos = [];
+      const expected = {
+        fields: '()',
+        values: '()',
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+    it('should get infos from length = 1 array', () => {
+      const infos = [ 5 ];
+      const expected = {
+        fields: '()',
+        values: '(5)',
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+    it('should get infos from length > 1 array', () => {
+      const infos = [ 2, 'a', 'Now()' ];
+      const expected = {
+        fields: '()',
+        values: "(2, 'a', NOW())",
+      };
+      Sql.insertInfos(infos).should.eql(expected);
+    });
+  });
 });
