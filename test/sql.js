@@ -302,4 +302,54 @@ describe('Sql', () => {
       });
     });
   });
+  describe('limit()', () => {
+    it('should get limits from number', () => {
+      const limits = 5;
+      const expected = 'LIMIT 5';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get limits from number 0', () => {
+      const limits = 0;
+      const expected = 'LIMIT 0';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get limits from string', () => {
+      const limits = '5 OFFSET 10';
+      const expected = 'LIMIT 5 OFFSET 10';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get limits from length = 1 array', () => {
+      const limits = [ 5 ];
+      const expected = 'LIMIT 5';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get limits from length = 2 array', () => {
+      const limits = [ 5, 10 ];
+      const expected = 'LIMIT 5, 10';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get limits from object with property count', () => {
+      const limits = { count: 5 };
+      const expected = 'LIMIT 5';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get limits from object with property count and offset', () => {
+      const limits = { count: 5, offset: 10 };
+      const expected = 'LIMIT 5 OFFSET 10';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get empty string from object without property count', () => {
+      const limits = { offset: 5 };
+      const expected = '';
+      Sql.limit(limits).should.eql(expected);
+    });
+    it('should get empty string from invalid values', () => {
+      /* eslint no-undefined: 0 */
+      const arr = [ undefined, true, '', [], {}, () => {} ];
+      const expected = '';
+      arr.forEach((limits) => {
+        Sql.limit(limits).should.eql(expected);
+      });
+    });
+  });
 });
