@@ -140,4 +140,67 @@ describe('Sql', () => {
       Sql.insertInfos(infos).should.eql(expected);
     });
   });
+  describe('updateInfos()', () => {
+    it('should get string from string', () => {
+      const infos = 'a = 1';
+      const expected = 'a = 1';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get empty string from length = 0 array', () => {
+      const infos = [];
+      const expected = '';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get infos from length = 1 array', () => {
+      const infos = [ 'a = 1' ];
+      const expected = 'a = 1';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get infos from length > 1 array', () => {
+      const infos = [ 'a = 1', 'b = 2', "c = '3'" ];
+      const expected = "a = 1, b = 2, c = '3'";
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get empty string from object {}', () => {
+      const infos = {};
+      const expected = '';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get infos from property count = 1 object', () => {
+      const infos = { a: 1 };
+      const expected = '`a` = 1';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should not escape NOW()', () => {
+      const infos = { a: 'now()' };
+      const expected = '`a` = NOW()';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get infos from property count > 1 object', () => {
+      const infos = { a: 1, b: 'c', d: 'now()' };
+      const expected = "`a` = 1, `b` = 'c', `d` = NOW()";
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get empty string from undefined', () => {
+      /* eslint no-undefined: 0 */
+      const infos = undefined;
+      const expected = '';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get empty string from boolean', () => {
+      const infos = true;
+      const expected = '';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get empty string from number', () => {
+      const infos = 10;
+      const expected = '';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+    it('should get empty string from function', () => {
+      const infos = () => {};
+      const expected = '';
+      Sql.updateInfos(infos).should.eql(expected);
+    });
+  });
 });
