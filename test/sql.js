@@ -203,4 +203,74 @@ describe('Sql', () => {
       Sql.updateInfos(infos).should.eql(expected);
     });
   });
+  describe('where()', () => {
+    it('should get wheres from string', () => {
+      const wheres = 'a = 1';
+      const expected = 'WHERE a = 1';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get empty string from empty string', () => {
+      const wheres = '';
+      const expected = '';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from length = 1 array without command', () => {
+      const wheres = [ 'a = 1' ];
+      const expected = 'WHERE a = 1';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from length > 1 array without command', () => {
+      const wheres = [ 'a = 1', 'b = c' ];
+      const expected = 'WHERE a = 1 AND b = c';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get empty string from length = 1 array with command', () => {
+      const wheres = [ 'OR' ];
+      const expected = '';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from length = 2 array with command', () => {
+      const wheres = [ 'OR', 'a = 1' ];
+      const expected = 'WHERE a = 1';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from length > 2 array with command OR', () => {
+      const wheres = [ 'or', 'a = 1', 'b = c' ];
+      const expected = 'WHERE a = 1 OR b = c';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from length > 2 array with command AND', () => {
+      const wheres = [ 'and', 'a = 1', 'b = c' ];
+      const expected = 'WHERE a = 1 AND b = c';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get empty string from length = 0 array', () => {
+      const wheres = [];
+      const expected = '';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from property count = 1 object', () => {
+      const wheres = { a: 1 };
+      const expected = 'WHERE `a` = 1';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get IN where from array-value property object', () => {
+      const wheres = { a: [ 1, 2, 3 ] };
+      const expected = 'WHERE `a` IN (1, 2, 3)';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get wheres from property count > 1 object', () => {
+      const wheres = { a: 1, b: [ 1, 2, 3 ], c: 4 };
+      const expected = 'WHERE `a` = 1 AND `b` IN (1, 2, 3) AND `c` = 4';
+      Sql.where(wheres).should.eql(expected);
+    });
+    it('should get empty string from invalid types', () => {
+      /* eslint no-undefined: 0 */
+      const arr = [ undefined, true, 10, () => {} ];
+      const expected = '';
+      arr.forEach((wheres) => {
+        Sql.where(wheres).should.eql(expected);
+      });
+    });
+  });
 });
