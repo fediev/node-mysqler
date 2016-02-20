@@ -55,26 +55,13 @@ describe('Sql', () => {
       const expected = '`a` AS b, `c` AS d';
       Sql.selectFields(fields).should.equal(expected);
     });
-    it('should get * from undefined', () => {
+    it('should get * from invalid types', () => {
       /* eslint no-undefined: 0 */
-      const fields = undefined;
+      const arr = [ undefined, true, 10, () => {} ];
       const expected = '*';
-      Sql.selectFields(fields).should.equal(expected);
-    });
-    it('should get * from boolean', () => {
-      const fields = true;
-      const expected = '*';
-      Sql.selectFields(fields).should.equal(expected);
-    });
-    it('should get * from number', () => {
-      const fields = 10;
-      const expected = '*';
-      Sql.selectFields(fields).should.equal(expected);
-    });
-    it('should get * from function', () => {
-      const fields = () => {};
-      const expected = '*';
-      Sql.selectFields(fields).should.equal(expected);
+      arr.forEach((fields) => {
+        Sql.selectFields(fields).should.eql(expected);
+      });
     });
   });
   describe('insertInfos()', () => {
@@ -181,26 +168,13 @@ describe('Sql', () => {
       const expected = "`a` = 1, `b` = 'c', `d` = NOW()";
       Sql.updateInfos(infos).should.eql(expected);
     });
-    it('should get empty string from undefined', () => {
+    it('should get empty string from invalid types', () => {
       /* eslint no-undefined: 0 */
-      const infos = undefined;
+      const arr = [ undefined, true, 10, () => {} ];
       const expected = '';
-      Sql.updateInfos(infos).should.eql(expected);
-    });
-    it('should get empty string from boolean', () => {
-      const infos = true;
-      const expected = '';
-      Sql.updateInfos(infos).should.eql(expected);
-    });
-    it('should get empty string from number', () => {
-      const infos = 10;
-      const expected = '';
-      Sql.updateInfos(infos).should.eql(expected);
-    });
-    it('should get empty string from function', () => {
-      const infos = () => {};
-      const expected = '';
-      Sql.updateInfos(infos).should.eql(expected);
+      arr.forEach((infos) => {
+        Sql.updateInfos(infos).should.eql(expected);
+      });
     });
   });
   describe('where()', () => {
