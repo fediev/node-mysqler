@@ -400,4 +400,34 @@ describe('Sql', () => {
       Sql.select(tb, fields, wheres, orders, limits).should.eql(expected);
     });
   });
+  describe('insert()', () => {
+    it('should make insert sql with object infos', () => {
+      const tb = 'tdb';
+      const infos = { id: '', name: 'a', point: 5, time: 'now()' };
+      const expected = 'INSERT INTO `tdb` (`id`, `name`, `point`, `time`)'
+                     + " VALUES ('', 'a', 5, NOW())";
+      Sql.insert(tb, infos).should.eql(expected);
+    });
+    it('should make insert sql with array infos', () => {
+      const tb = 'tdb';
+      const infos = [ '', 'a', 5, 'now()' ];
+      const expected = 'INSERT INTO `tdb` ()'
+                     + " VALUES ('', 'a', 5, NOW())";
+      Sql.insert(tb, infos).should.eql(expected);
+    });
+    it('should make insert sql with object {}', () => {
+      const tb = 'tdb';
+      const infos = {};
+      const expected = 'INSERT INTO `tdb` () VALUES ()';
+      Sql.insert(tb, infos).should.eql(expected);
+    });
+    it('should make insert sql with invalid values', () => {
+      const tb = 'tdb';
+      const arr = [ undefined, true, 5, '_INVALID_TYPE_', [], {}, () => {} ];
+      const expected = 'INSERT INTO `tdb` () VALUES ()';
+      arr.forEach((infos) => {
+        Sql.insert(tb, infos).should.eql(expected);
+      });
+    });
+  });
 });
