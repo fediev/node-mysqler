@@ -56,7 +56,7 @@ describe('Sql', () => {
       Sql.selectFields(fields).should.equal(expected);
     });
     it('should get * from invalid types', () => {
-      /* eslint no-undefined: 0 */
+      // eslint-disable-next-line no-undefined
       const arr = [ undefined, true, 10, () => {} ];
       const expected = '*';
       arr.forEach((fields) => {
@@ -169,7 +169,7 @@ describe('Sql', () => {
       Sql.updateInfos(infos).should.eql(expected);
     });
     it('should get empty string from invalid types', () => {
-      /* eslint no-undefined: 0 */
+      // eslint-disable-next-line no-undefined
       const arr = [ undefined, true, 10, () => {} ];
       const expected = '';
       arr.forEach((infos) => {
@@ -239,7 +239,7 @@ describe('Sql', () => {
       Sql.where(wheres).should.eql(expected);
     });
     it('should get empty string from invalid types', () => {
-      /* eslint no-undefined: 0 */
+      // eslint-disable-next-line no-undefined
       const arr = [ undefined, true, 10, () => {} ];
       const expected = '';
       arr.forEach((wheres) => {
@@ -294,7 +294,7 @@ describe('Sql', () => {
       Sql.orderBy(orders).should.eql(expected);
     });
     it('should get empty string from invalid types', () => {
-      /* eslint no-undefined: 0 */
+      // eslint-disable-next-line no-undefined
       const arr = [ undefined, true, 10, () => {} ];
       const expected = '';
       arr.forEach((orders) => {
@@ -344,7 +344,7 @@ describe('Sql', () => {
       Sql.limit(limits).should.eql(expected);
     });
     it('should get empty string from invalid values', () => {
-      /* eslint no-undefined: 0 */
+      // eslint-disable-next-line no-undefined
       const arr = [ undefined, true, '', [], {}, () => {} ];
       const expected = '';
       arr.forEach((limits) => {
@@ -423,6 +423,7 @@ describe('Sql', () => {
     });
     it('should make insert sql with invalid values', () => {
       const tb = 'tdb';
+      // eslint-disable-next-line no-undefined
       const arr = [ undefined, true, 5, '_INVALID_TYPE_', [], {}, () => {} ];
       const expected = 'INSERT INTO `tdb` () VALUES ()';
       arr.forEach((infos) => {
