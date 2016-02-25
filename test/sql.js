@@ -31,12 +31,12 @@ describe('Sql', () => {
       Sql.selectFields(fields).should.equal(expected);
     });
     it('should get field list from length = 1 array', () => {
-      const fields = [ 'a' ];
+      const fields = ['a'];
       const expected = '`a`';
       Sql.selectFields(fields).should.equal(expected);
     });
     it('should get field list from length > 1 array', () => {
-      const fields = [ 'a', 'b', 'c' ];
+      const fields = ['a', 'b', 'c'];
       const expected = '`a`, `b`, `c`';
       Sql.selectFields(fields).should.equal(expected);
     });
@@ -57,7 +57,7 @@ describe('Sql', () => {
     });
     it('should get * from invalid types', () => {
       // eslint-disable-next-line no-undefined
-      const arr = [ undefined, true, 10, () => {} ];
+      const arr = [undefined, true, 10, () => {}];
       const expected = '*';
       arr.forEach((fields) => {
         Sql.selectFields(fields).should.eql(expected);
@@ -111,7 +111,7 @@ describe('Sql', () => {
       Sql.insertInfos(infos).should.eql(expected);
     });
     it('should get infos from length = 1 array', () => {
-      const infos = [ 5 ];
+      const infos = [5];
       const expected = {
         fields: '()',
         values: '(5)',
@@ -119,7 +119,7 @@ describe('Sql', () => {
       Sql.insertInfos(infos).should.eql(expected);
     });
     it('should get infos from length > 1 array', () => {
-      const infos = [ 2, 'a', 'Now()' ];
+      const infos = [2, 'a', 'Now()'];
       const expected = {
         fields: '()',
         values: "(2, 'a', NOW())",
@@ -139,12 +139,12 @@ describe('Sql', () => {
       Sql.updateInfos(infos).should.eql(expected);
     });
     it('should get infos from length = 1 array', () => {
-      const infos = [ 'a = 1' ];
+      const infos = ['a = 1'];
       const expected = 'a = 1';
       Sql.updateInfos(infos).should.eql(expected);
     });
     it('should get infos from length > 1 array', () => {
-      const infos = [ 'a = 1', 'b = 2', "c = '3'" ];
+      const infos = ['a = 1', 'b = 2', "c = '3'"];
       const expected = "a = 1, b = 2, c = '3'";
       Sql.updateInfos(infos).should.eql(expected);
     });
@@ -170,7 +170,7 @@ describe('Sql', () => {
     });
     it('should get empty string from invalid types', () => {
       // eslint-disable-next-line no-undefined
-      const arr = [ undefined, true, 10, () => {} ];
+      const arr = [undefined, true, 10, () => {}];
       const expected = '';
       arr.forEach((infos) => {
         Sql.updateInfos(infos).should.eql(expected);
@@ -189,32 +189,32 @@ describe('Sql', () => {
       Sql.where(wheres).should.eql(expected);
     });
     it('should get wheres from length = 1 array without command', () => {
-      const wheres = [ 'a = 1' ];
+      const wheres = ['a = 1'];
       const expected = 'WHERE a = 1';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get wheres from length > 1 array without command', () => {
-      const wheres = [ 'a = 1', 'b = c' ];
+      const wheres = ['a = 1', 'b = c'];
       const expected = 'WHERE a = 1 AND b = c';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get empty string from length = 1 array with command', () => {
-      const wheres = [ 'OR' ];
+      const wheres = ['OR'];
       const expected = '';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get wheres from length = 2 array with command', () => {
-      const wheres = [ 'OR', 'a = 1' ];
+      const wheres = ['OR', 'a = 1'];
       const expected = 'WHERE a = 1';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get wheres from length > 2 array with command OR', () => {
-      const wheres = [ 'or', 'a = 1', 'b = c' ];
+      const wheres = ['or', 'a = 1', 'b = c'];
       const expected = 'WHERE a = 1 OR b = c';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get wheres from length > 2 array with command AND', () => {
-      const wheres = [ 'and', 'a = 1', 'b = c' ];
+      const wheres = ['and', 'a = 1', 'b = c'];
       const expected = 'WHERE a = 1 AND b = c';
       Sql.where(wheres).should.eql(expected);
     });
@@ -229,18 +229,18 @@ describe('Sql', () => {
       Sql.where(wheres).should.eql(expected);
     });
     it('should get IN where from array-value property object', () => {
-      const wheres = { a: [ 1, 2, 3 ] };
+      const wheres = { a: [1, 2, 3] };
       const expected = 'WHERE `a` IN (1, 2, 3)';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get wheres from property count > 1 object', () => {
-      const wheres = { a: 1, b: [ 1, 2, 3 ], c: 4 };
+      const wheres = { a: 1, b: [1, 2, 3], c: 4 };
       const expected = 'WHERE `a` = 1 AND `b` IN (1, 2, 3) AND `c` = 4';
       Sql.where(wheres).should.eql(expected);
     });
     it('should get empty string from invalid types', () => {
       // eslint-disable-next-line no-undefined
-      const arr = [ undefined, true, 10, () => {} ];
+      const arr = [undefined, true, 10, () => {}];
       const expected = '';
       arr.forEach((wheres) => {
         Sql.where(wheres).should.eql(expected);
@@ -259,12 +259,12 @@ describe('Sql', () => {
       Sql.orderBy(orders).should.eql(expected);
     });
     it('should get orders from length = 1 array', () => {
-      const orders = [ 'a ASC' ];
+      const orders = ['a ASC'];
       const expected = 'ORDER BY a ASC';
       Sql.orderBy(orders).should.eql(expected);
     });
     it('should get orders from length > 1 array', () => {
-      const orders = [ 'a ASC', 'b DESC' ];
+      const orders = ['a ASC', 'b DESC'];
       const expected = 'ORDER BY a ASC, b DESC';
       Sql.orderBy(orders).should.eql(expected);
     });
@@ -295,7 +295,7 @@ describe('Sql', () => {
     });
     it('should get empty string from invalid types', () => {
       // eslint-disable-next-line no-undefined
-      const arr = [ undefined, true, 10, () => {} ];
+      const arr = [undefined, true, 10, () => {}];
       const expected = '';
       arr.forEach((orders) => {
         Sql.orderBy(orders).should.eql(expected);
@@ -319,12 +319,12 @@ describe('Sql', () => {
       Sql.limit(limits).should.eql(expected);
     });
     it('should get limits from length = 1 array', () => {
-      const limits = [ 5 ];
+      const limits = [5];
       const expected = 'LIMIT 5';
       Sql.limit(limits).should.eql(expected);
     });
     it('should get limits from length = 2 array', () => {
-      const limits = [ 5, 10 ];
+      const limits = [5, 10];
       const expected = 'LIMIT 5, 10';
       Sql.limit(limits).should.eql(expected);
     });
@@ -345,7 +345,7 @@ describe('Sql', () => {
     });
     it('should get empty string from invalid values', () => {
       // eslint-disable-next-line no-undefined
-      const arr = [ undefined, true, '', [], {}, () => {} ];
+      const arr = [undefined, true, '', [], {}, () => {}];
       const expected = '';
       arr.forEach((limits) => {
         Sql.limit(limits).should.eql(expected);
@@ -360,20 +360,20 @@ describe('Sql', () => {
     });
     it('should make select sql on tb, fields', () => {
       const tb = 'tdb_select';
-      const fields = [ 'a' ];
+      const fields = ['a'];
       const expected = 'SELECT `a` FROM `tdb_select`';
       Sql.select(tb, fields).should.eql(expected);
     });
     it('should make select sql on tb, fields, wheres', () => {
       const tb = 'tdb_select';
-      const fields = [ 'a' ];
+      const fields = ['a'];
       const wheres = { a: 1 };
       const expected = 'SELECT `a` FROM `tdb_select` WHERE `a` = 1';
       Sql.select(tb, fields, wheres).should.eql(expected);
     });
     it('should make select sql on tb, fields, wheres, orders', () => {
       const tb = 'tdb_select';
-      const fields = [ 'a' ];
+      const fields = ['a'];
       const wheres = { a: 1 };
       const orders = { a: 'DESC' };
       const expected = 'SELECT `a` FROM `tdb_select` WHERE `a` = 1'
@@ -382,10 +382,10 @@ describe('Sql', () => {
     });
     it('should make select sql on tb, fields, wheres, orders, limits', () => {
       const tb = 'tdb_select';
-      const fields = [ 'a' ];
+      const fields = ['a'];
       const wheres = { a: 1 };
       const orders = { a: 'DESC' };
-      const limits = [ 5, 10 ];
+      const limits = [5, 10];
       const expected = 'SELECT `a` FROM `tdb_select` WHERE `a` = 1'
                      + ' ORDER BY `a` DESC LIMIT 5, 10';
       Sql.select(tb, fields, wheres, orders, limits).should.eql(expected);
@@ -395,7 +395,7 @@ describe('Sql', () => {
       const fields = '';
       const wheres = '';
       const orders = '';
-      const limits = [ 5, 10 ];
+      const limits = [5, 10];
       const expected = 'SELECT * FROM `tdb_select` LIMIT 5, 10';
       Sql.select(tb, fields, wheres, orders, limits).should.eql(expected);
     });
@@ -410,7 +410,7 @@ describe('Sql', () => {
     });
     it('should make insert sql with array infos', () => {
       const tb = 'tdb';
-      const infos = [ '', 'a', 5, 'now()' ];
+      const infos = ['', 'a', 5, 'now()'];
       const expected = 'INSERT INTO `tdb` ()'
                      + " VALUES ('', 'a', 5, NOW())";
       Sql.insert(tb, infos).should.eql(expected);
@@ -424,7 +424,7 @@ describe('Sql', () => {
     it('should make insert sql with invalid values', () => {
       const tb = 'tdb';
       // eslint-disable-next-line no-undefined
-      const arr = [ undefined, true, 5, '_INVALID_TYPE_', [], {}, () => {} ];
+      const arr = [undefined, true, 5, '_INVALID_TYPE_', [], {}, () => {}];
       const expected = 'INSERT INTO `tdb` () VALUES ()';
       arr.forEach((infos) => {
         Sql.insert(tb, infos).should.eql(expected);
@@ -440,7 +440,7 @@ describe('Sql', () => {
     });
     it('should make update sql with array infos', () => {
       const tb = 'tdb';
-      const infos = [ 'a = 1', 'b = c' ];
+      const infos = ['a = 1', 'b = c'];
       const expected = 'UPDATE `tdb` SET a = 1, b = c';
       Sql.update(tb, infos).should.eql(expected);
     });
