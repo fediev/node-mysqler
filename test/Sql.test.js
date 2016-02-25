@@ -6,7 +6,7 @@
 'use strict';
 
 const should = require('chai').should();
-const Sql = require('../lib/sql');
+const Sql = require('../lib/Sql');
 
 describe('Sql', () => {
   describe('selectFields()', () => {
