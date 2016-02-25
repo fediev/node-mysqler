@@ -1,1 +1,1 @@
-module.exports = require('./lib/mysqler');
+module.exports = {};
