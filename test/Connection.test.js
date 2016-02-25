@@ -15,9 +15,11 @@ describe('Connection', () => {
   beforeEach(() => {
     actor = mysqler.createConnection(config);
   });
-  afterEach(() => {
-    if (actor._actor.state !== 'disconnected') {
-      actor.end();
+  afterEach((done) => {
+    if (actor._actor.state === 'disconnected') {
+      return done();
+    } else {
+      return actor.end(done);
     }
   });
 
@@ -30,9 +32,10 @@ describe('Connection', () => {
   });
 
   describe('end()', ()=> {
-    it('should end connection', () => {
-      actor.end();
-      actor._actor.state.should.eql('disconnected');
+    it('should end connection', (done) => {
+      actor._actor.connect(() => {
+        actor._actor.end(done);
+      });
     });
   });
 
