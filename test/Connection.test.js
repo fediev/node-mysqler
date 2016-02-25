@@ -11,18 +11,27 @@ const Connection = require('../lib/Connection');
 const config = require('./config.json');
 
 describe('Connection', () => {
-  describe('constructor', () => {
-    let conn;
-    before(() => {
-      conn = mysqler.createConnection(config);
-    });
-    after(() => {
+  let conn;
+  beforeEach(() => {
+    conn = mysqler.createConnection(config);
+  });
+  afterEach(() => {
+    if (conn.actor.state !== 'disconnected') {
       conn.end();
-    });
+    }
+  });
+
+  describe('constructor', () => {
     it('should set actor with mysql Connection instance', () => {
       conn.should.have.property('actor');
       conn.should.have.property('config');
       return conn.query('SELECT 1+1 AS s1').should.become([{ s1: 2 }]);
+    });
+  });
+  describe('end()', ()=> {
+    it('should end connection', () => {
+      conn.end();
+      conn.actor.state.should.eql('disconnected');
     });
   });
 });
