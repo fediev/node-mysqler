@@ -162,4 +162,47 @@ describe('Connection', () => {
       });
     });
   });
+
+  describe('queryRow()', () => {
+    it('should be fulfilled on right sql', () => {
+      const sql = 'SELECT 1+1 AS s';
+      return actor.queryRow(sql).should.be.fulfilled;
+    });
+    it('should reject on wrong sql', () => {
+      const sql = '_WRONG_SQL_';
+      return actor.queryRow(sql).should.be.rejected;
+    });
+    it('should get a row from row count > 1', () => {
+      const sql = 'SELECT * FROM tbm_select';
+      return actor.queryRow(sql)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.be.an('object');
+        result.color.should.eql('red');
+      });
+    });
+    it('should get a row from row count = 1', () => {
+      const sql = 'SELECT * FROM tbm_select WHERE product = "mango"';
+      return actor.queryRow(sql)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.be.an('object');
+        result.color.should.eql('yellow');
+      });
+    });
+    it('should get undefined from row count = 0', () => {
+      const sql = 'SELECT * FROM tbm_select WHERE product = "melon"';
+      return actor.queryRow(sql)
+      .then((result) => {
+        should.not.exist(result);
+      });
+    });
+    it('should get undefined on execute sql', () => {
+      const sql = 'INSERT INTO tbm_insert_delete () VALUES ()';
+      return actor.queryRow(sql)
+      .then((result) => {
+        should.not.exist(result);
+      });
+    });
+  });
 });
