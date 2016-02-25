@@ -16,14 +16,14 @@ describe('Pool', () => {
     pool = mysqler.createPool(config);
   });
   afterEach(() => {
-    if (!pool.actor._closed) {
+    if (!pool._actor._closed) {
       pool.end();
     }
   });
 
   describe('constructor', () => {
     it('should set actor with mysql Pool instance', () => {
-      pool.should.have.property('actor');
+      pool.should.have.property('_actor');
       pool.should.have.property('config');
       return pool.query('SELECT 1+1 AS s1').should.become([{ s1: 2 }]);
     });
@@ -32,7 +32,7 @@ describe('Pool', () => {
   describe('end()', () => {
     it('should end pool', () => {
       pool.end();
-      pool.actor._closed.should.eql(true);
+      pool._actor._closed.should.eql(true);
     });
   });
 
