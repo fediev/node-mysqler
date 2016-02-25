@@ -198,4 +198,56 @@ describe('Pool', () => {
       });
     });
   });
+
+  describe('queryValue()', () => {
+    it('should be fulfilled on right sql', () => {
+      const sql = 'SELECT 1+1 AS s';
+      return actor.queryValue(sql).should.be.fulfilled;
+    });
+    it('should reject on wrong sql', () => {
+      const sql = '_WRONG_SQL_';
+      return actor.queryValue(sql).should.be.rejected;
+    });
+    it('should get value from row count > 1', () => {
+      const sql = 'SELECT color FROM tbm_select';
+      return actor.queryValue(sql)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.not.be.an('object');
+        result.should.eql('red');
+      });
+    });
+    it('should get value from row count = 1', () => {
+      const sql = 'SELECT color FROM tbm_select WHERE product = "mango"';
+      return actor.queryValue(sql)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.not.be.an('object');
+        result.should.eql('yellow');
+      });
+    });
+    it('should get undefined from row count = 0', () => {
+      const sql = 'SELECT color FROM tbm_select WHERE product = "melon"';
+      return actor.queryValue(sql)
+      .then((result) => {
+        should.not.exist(result);
+      });
+    });
+    it('should get the first field value', () => {
+      const sql = 'SELECT color, price, count FROM tbm_select';
+      return actor.queryValue(sql)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.not.be.an('object');
+        result.should.eql('red');
+      });
+    });
+    it('should get undefined on execute sql', () => {
+      const sql = 'INSERT INTO tbm_insert_delete () VALUES ()';
+      return actor.queryValue(sql)
+      .then((result) => {
+        should.not.exist(result);
+      });
+    });
+  });
 });
