@@ -28,6 +28,7 @@ describe('Pool', () => {
       return pool.query('SELECT 1+1 AS s1').should.become([{ s1: 2 }]);
     });
   });
+
   describe('end()', () => {
     it('should end pool', () => {
       pool.end();

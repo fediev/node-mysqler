@@ -29,15 +29,16 @@ describe('Connection', () => {
     });
   });
 
-  describe('destroy()', ()=> {
-    it('should destroy connection', () => {
-      conn.destroy();
-      conn.actor.state.should.eql('disconnected');
-    });
-  });
   describe('end()', ()=> {
     it('should end connection', () => {
       conn.end();
+      conn.actor.state.should.eql('disconnected');
+    });
+  });
+
+  describe('destroy()', ()=> {
+    it('should destroy connection', () => {
+      conn.destroy();
       conn.actor.state.should.eql('disconnected');
     });
   });
