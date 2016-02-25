@@ -44,6 +44,14 @@ describe('Connection', () => {
   });
 
   describe('query()', () => {
+    it('should be fulfilled on right sql', () => {
+      const sql = 'SELECT 1+1 AS s';
+      return actor.query(sql).should.be.fulfilled;
+    });
+    it('should be rejected on wrong sql', () => {
+      const sql = '_WRONG_SQL_';
+      return actor.query(sql).should.be.rejected;
+    });
     it('should select data', () => {
       const sql = 'SELECT * FROM tbm_select';
       return actor.query(sql)
