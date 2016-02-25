@@ -257,4 +257,68 @@ describe('Connection', () => {
       });
     });
   });
+
+  describe('select()', () => {
+    it('should select with tb', () => {
+      const tb = 'tbm_select';
+      return actor.select(tb)
+      .then((result) => {
+        result.should.have.lengthOf(6);
+      });
+    });
+    it('should select with tb, fields', () => {
+      const tb = 'tbm_select';
+      const fields = ['product'];
+      return actor.select(tb, fields)
+      .then((result) => {
+        result.should.have.lengthOf(6);
+        result[0].should.have.property('product');
+        result[0].should.have.not.property('color');
+      });
+    });
+    it('should select with tb, fields, wheres', () => {
+      const tb = 'tbm_select';
+      const fields = ['product'];
+      const wheres = { color: 'red' };
+      return actor.select(tb, fields, wheres)
+      .then((result) => {
+        result.should.have.lengthOf(2);
+      });
+    });
+    it('should select with tb, fields, wheres, orders', () => {
+      const tb = 'tbm_select';
+      const fields = ['product'];
+      const wheres = { color: 'red' };
+      const orders = { count: 'DESC' };
+      return actor.select(tb, fields, wheres, orders)
+      .then((result) => {
+        result.should.have.lengthOf(2);
+        result[0].should.have.property('product', 'strawberry');
+      });
+    });
+    it('should select with tb, fields, wheres, orders, limits', () => {
+      const tb = 'tbm_select';
+      const fields = ['product'];
+      const wheres = { color: 'red' };
+      const orders = { count: 'DESC' };
+      const limits = [1, 1];
+      return actor.select(tb, fields, wheres, orders, limits)
+      .then((result) => {
+        result.should.have.lengthOf(1);
+        result[0].should.have.property('product', 'apple');
+      });
+    });
+    it('should select correctly with empty values', () => {
+      const tb = 'tbm_select';
+      const fields = '';
+      const wheres = '';
+      const orders = '';
+      const limits = [2, 2];
+      return actor.select(tb, fields, wheres, orders, limits)
+      .then((result) => {
+        result.should.have.lengthOf(2);
+        result[0].should.have.property('product', 'mango');
+      });
+    });
+  });
 });
