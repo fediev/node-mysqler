@@ -314,4 +314,31 @@ describe('Pool', () => {
       });
     });
   });
+
+  describe('insert()', () => {
+    it('should insert with object infos', () => {
+      const tb = 'tbm_insert_delete';
+      const infos = { product: 'papaya', color: 'green' };
+      return actor.insert(tb, infos)
+      .then((result) => {
+        result.affectedRows.should.eql(1);
+      });
+    });
+    it('should insert with array infos', () => {
+      const tb = 'tbm_insert_delete';
+      const infos = ['', 'watermelon', 'blue', 100, 30];
+      return actor.insert(tb, infos)
+      .then((result) => {
+        result.affectedRows.should.eql(1);
+      });
+    });
+    it('should insert with object {}', () => {
+      const tb = 'tbm_insert_delete';
+      const infos = {};
+      return actor.insert(tb, infos)
+      .then((result) => {
+        result.affectedRows.should.eql(1);
+      });
+    });
+  });
 });
