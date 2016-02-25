@@ -28,6 +28,13 @@ describe('Connection', () => {
       return conn.query('SELECT 1+1 AS s1').should.become([{ s1: 2 }]);
     });
   });
+
+  describe('destroy()', ()=> {
+    it('should destroy connection', () => {
+      conn.destroy();
+      conn.actor.state.should.eql('disconnected');
+    });
+  });
   describe('end()', ()=> {
     it('should end connection', () => {
       conn.end();
