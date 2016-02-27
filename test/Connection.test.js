@@ -31,7 +31,7 @@ describe('Connection', () => {
     });
   });
 
-  describe('end()', ()=> {
+  describe('end()', () => {
     it('should end connection', (done) => {
       actor._actor.connect(() => {
         actor._actor.end(done);
@@ -39,7 +39,7 @@ describe('Connection', () => {
     });
   });
 
-  describe('destroy()', ()=> {
+  describe('destroy()', () => {
     it('should destroy connection', () => {
       actor.destroy();
       actor._actor.state.should.eql('disconnected');

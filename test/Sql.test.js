@@ -3,6 +3,8 @@
  * @author fediev
  */
 
+/*eslint-disable id-length, no-empty-function */
+
 'use strict';
 
 const should = require('chai').should();
