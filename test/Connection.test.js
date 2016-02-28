@@ -484,4 +484,24 @@ describe('Connection', () => {
       });
     });
   });
+
+  describe('getCount()', () => {
+    it('should get count with tb', () => {
+      const tb = 'tbm_select';
+      const expected = 6;
+      return actor.getCount(tb).should.become(expected);
+    });
+    it('should get count with tb, fields, wheres', () => {
+      const tb = 'tbm_select';
+      const wheres = { color: 'yellow' };
+      const expected = 2;
+      return actor.getCount(tb, wheres).should.become(expected);
+    });
+    it('should get 0 when no result', () => {
+      const tb = 'tbm_select';
+      const wheres = { color: '_NO_COLOR_' };
+      const expected = 0;
+      return actor.getCount(tb, wheres).should.become(expected);
+    });
+  });
 });
