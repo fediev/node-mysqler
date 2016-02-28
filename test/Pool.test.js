@@ -342,6 +342,26 @@ describe('Pool', () => {
     });
   });
 
+  describe('update()', () => {
+    it('should update data with infos', () => {
+      const tb = 'tbm_update';
+      const infos = { price: 5 };
+      return actor.update(tb, infos)
+      .then((result) => {
+        result.affectedRows.should.eql(6);
+      });
+    });
+    it('should update data with infos, wheres', () => {
+      const tb = 'tbm_update';
+      const infos = { price: 99 };
+      const wheres = { color: 'red' };
+      return actor.update(tb, infos, wheres)
+      .then((result) => {
+        result.affectedRows.should.eql(2);
+      });
+    });
+  });
+
   describe('delete()', () => {
     it('should delete data with infos', () => {
       const tb = 'tbm_insert_delete';
