@@ -342,6 +342,25 @@ describe('Pool', () => {
     });
   });
 
+  describe('delete()', () => {
+    it('should delete data with infos', () => {
+      const tb = 'tbm_insert_delete';
+      const expected = 'DELETE_ALL_NOT_ALLOWED';
+      return actor.delete(tb).should.be.rejectedWith(Error, expected);
+    });
+    it('should delete data with infos, wheres', () => {
+      const tb = 'tbm_insert_delete';
+      const wheres = { color: 'red' };
+      return actor.insert(tb, wheres)
+      .then(() => {
+        return actor.delete(tb, wheres)
+        .then((result) => {
+          result.affectedRows.should.least(1);
+        });
+      });
+    });
+  });
+
   describe('getRow()', () => {
     it('should get a row with tb', () => {
       const tb = 'tbm_select';
