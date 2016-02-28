@@ -441,4 +441,47 @@ describe('Connection', () => {
       });
     });
   });
+
+  describe('getValue()', () => {
+    it('should get a value with tb', () => {
+      const tb = 'tbm_select';
+      return actor.getValue(tb)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.not.be.an('object');
+        result.should.eql(1);
+      });
+    });
+    it('should get a value with tb, fields', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const expected = 'apple';
+      return actor.getValue(tb, fields).should.become(expected);
+    });
+    it('should get a value with tb, fields, wheres', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const wheres = { color: 'yellow' };
+      const expected = 'mango';
+      return actor.getValue(tb, fields, wheres).should.become(expected);
+    });
+    it('should get a value with tb, fields, wheres, orders', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const wheres = { color: 'yellow' };
+      const orders = { count: 'DESC' };
+      const expected = 'banana';
+      return actor.getValue(tb, fields, wheres, orders).should.become(expected);
+    });
+    it('should get undefined when no result', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const wheres = { color: '_NO_COLOR_' };
+      return actor.getValue(tb, fields, wheres)
+      .then((result) => {
+        should.not.exist(result);
+        (typeof result).should.eql('undefined');
+      });
+    });
+  });
 });
