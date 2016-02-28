@@ -341,4 +341,55 @@ describe('Pool', () => {
       });
     });
   });
+
+  describe('getRow()', () => {
+    it('should get a row with tb', () => {
+      const tb = 'tbm_select';
+      return actor.getRow(tb)
+      .then((result) => {
+        result.should.not.be.an('array');
+        result.should.be.an('object');
+        result.product.should.eql('apple');
+        result.price.should.eql(100);
+      });
+    });
+    it('should get a row with tb, fields', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      return actor.getRow(tb, fields)
+      .then((result) => {
+        result.product.should.eql('apple');
+        should.not.exist(result.price);
+      });
+    });
+    it('should get a row with tb, fields, wheres', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const wheres = { color: 'yellow' };
+      return actor.getRow(tb, fields, wheres)
+      .then((result) => {
+        result.product.should.eql('mango');
+      });
+    });
+    it('should get a row with tb, fields, wheres, orders', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const wheres = { color: 'yellow' };
+      const orders = { count: 'DESC' };
+      return actor.getRow(tb, fields, wheres, orders)
+      .then((result) => {
+        result.product.should.eql('banana');
+      });
+    });
+    it('should get undefined when no result', () => {
+      const tb = 'tbm_select';
+      const fields = ['product', 'color'];
+      const wheres = { color: '_NO_COLOR_' };
+      return actor.getRow(tb, fields, wheres)
+      .then((result) => {
+        should.not.exist(result);
+        (typeof result).should.eql('undefined');
+      });
+    });
+  });
 });
