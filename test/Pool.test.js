@@ -527,4 +527,17 @@ describe('Pool', () => {
       return actor.getSum(tb, field, wheres).should.become(expected);
     });
   });
+
+  describe('getTableFields()', () => {
+    it('should get table field list', () => {
+      const tb = 'tbm_select';
+      const expected = ['id', 'product', 'color', 'price', 'count'];
+      return actor.getTableFields(tb).should.become(expected);
+    });
+    it('should get ER_NO_SUCH_TABLE error on non exist table', () => {
+      const tb = 'tbm_NOT_EXIST_';
+      const expected = 'ER_NO_SUCH_TABLE';
+      return actor.getTableFields(tb).should.be.rejectedWith(Error, expected);
+    });
+  });
 });
