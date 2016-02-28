@@ -504,4 +504,37 @@ describe('Connection', () => {
       return actor.getCount(tb, wheres).should.become(expected);
     });
   });
+
+  describe('getSum()', () => {
+    it('should get count with tb, field', () => {
+      const tb = 'tbm_select';
+      const field = 'count';
+      const expected = 110;
+      return actor.getSum(tb, field).should.become(expected);
+    });
+    it('should get count with tb, fields, wheres', () => {
+      const tb = 'tbm_select';
+      const field = 'count';
+      const wheres = { color: 'yellow' };
+      const expected = 45;
+      return actor.getSum(tb, field, wheres).should.become(expected);
+    });
+    it('should get count with tb, fields, wheres, limits', () => {
+      const tb = 'tbm_select';
+      const field = 'count';
+      const wheres = 'price < 100';
+      const orders = { price: 'DESC' };
+      const limits = 2;
+      const expected = 50;
+      return actor.getSum(tb, field, wheres, orders, limits)
+             .should.become(expected);
+    });
+    it('should get 0 when no result', () => {
+      const tb = 'tbm_select';
+      const field = 'count';
+      const wheres = { color: '_NO_COLOR_' };
+      const expected = 0;
+      return actor.getSum(tb, field, wheres).should.become(expected);
+    });
+  });
 });
