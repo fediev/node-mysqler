@@ -2,7 +2,7 @@
  * .eslintrc.js
  * base: r.0.2.0
  * eslint: ^2.2.0
- * modified: -
+ * modified: require-jsdoc
  */
 
 module.exports = {
@@ -231,8 +231,8 @@ module.exports = {
     'require-jsdoc': [1, {
       require: {
         FunctionDeclaration: true,
-        MethodDefinition: true,
-        ClassDeclaration: true,
+        MethodDefinition: false,
+        ClassDeclaration: false,
       },
     }],
     'semi': [2, 'always'],
