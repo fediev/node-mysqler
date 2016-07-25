@@ -9,11 +9,5 @@ https://github.com/felixge/node-mysql/
 ## How to Install
 
 ```
-npm install --save git+ssh://git@gitlab.com:fediev/node-mysqler.git
-```
-
-## Test
-
-```
-npm test
+npm install mysqler
 ```
