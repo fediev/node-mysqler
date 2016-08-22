@@ -3,7 +3,7 @@
  * @author fediev
  */
 
-/*eslint-disable id-length, no-empty-function */
+/*eslint-disable id-length, no-empty-function, no-unused-expressions */
 
 'use strict';
 
@@ -481,6 +481,44 @@ describe('Sql', () => {
       const wheres = { a: 1 };
       const expected = 'DELETE FROM `tdb` WHERE `a` = 1';
       Sql.delete(tb, wheres).should.eql(expected);
+    });
+  });
+
+  describe('isMysqlFunction()', () => {
+    it('should return true on lower case without param', () => {
+      const str = 'now()';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.true;
+    });
+    it('should return true on lower case with param', () => {
+      const str = 'now(3)';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.true;
+    });
+    it('should return true on upper case without param', () => {
+      const str = 'NOW()';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.true;
+    });
+    it('should return true on upper case with param', () => {
+      const str = 'NOW(3)';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.true;
+    });
+    it('should return true on mixed case without param', () => {
+      const str = 'Now()';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.true;
+    });
+    it('should return true on mixed case with param', () => {
+      const str = 'Now(3)';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.true;
+    });
+    it('should return false on not listed function', () => {
+      const str = '_NOT_LISTED_(3)';
+      const result = Sql.isMysqlFunction(str);
+      result.should.be.false;
     });
   });
 });
