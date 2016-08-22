@@ -92,12 +92,12 @@ describe('Sql', () => {
       Sql.insertInfos(infos).should.eql(expected);
     });
     it('should not escape string NOW()', () => {
-      const infos = { a: 'now()' };
+      const infos = { a: 'NOW()' };
       const expected = '(NOW())';
       Sql.insertInfos(infos).values.should.eql(expected);
     });
     it('should get infos from property count > 1 object', () => {
-      const infos = { a: 1, b: 'c', d: 'now()' };
+      const infos = { a: 1, b: 'c', d: 'NOW()' };
       const expected = {
         fields: '(`a`, `b`, `d`)',
         values: "(1, 'c', NOW())",
@@ -121,7 +121,7 @@ describe('Sql', () => {
       Sql.insertInfos(infos).should.eql(expected);
     });
     it('should get infos from length > 1 array', () => {
-      const infos = [2, 'a', 'Now()'];
+      const infos = [2, 'a', 'NOW()'];
       const expected = {
         fields: '()',
         values: "(2, 'a', NOW())",
@@ -161,12 +161,12 @@ describe('Sql', () => {
       Sql.updateInfos(infos).should.eql(expected);
     });
     it('should not escape NOW()', () => {
-      const infos = { a: 'now()' };
+      const infos = { a: 'NOW()' };
       const expected = '`a` = NOW()';
       Sql.updateInfos(infos).should.eql(expected);
     });
     it('should get infos from property count > 1 object', () => {
-      const infos = { a: 1, b: 'c', d: 'now()' };
+      const infos = { a: 1, b: 'c', d: 'NOW()' };
       const expected = "`a` = 1, `b` = 'c', `d` = NOW()";
       Sql.updateInfos(infos).should.eql(expected);
     });
@@ -405,14 +405,14 @@ describe('Sql', () => {
   describe('insert()', () => {
     it('should make insert sql with object infos', () => {
       const tb = 'tdb';
-      const infos = { id: '', name: 'a', point: 5, time: 'now()' };
+      const infos = { id: '', name: 'a', point: 5, time: 'NOW()' };
       const expected = 'INSERT INTO `tdb` (`id`, `name`, `point`, `time`)'
                      + " VALUES ('', 'a', 5, NOW())";
       Sql.insert(tb, infos).should.eql(expected);
     });
     it('should make insert sql with array infos', () => {
       const tb = 'tdb';
-      const infos = ['', 'a', 5, 'now()'];
+      const infos = ['', 'a', 5, 'NOW()'];
       const expected = 'INSERT INTO `tdb` ()'
                      + " VALUES ('', 'a', 5, NOW())";
       Sql.insert(tb, infos).should.eql(expected);
@@ -448,7 +448,7 @@ describe('Sql', () => {
     });
     it('should make update sql with object infos', () => {
       const tb = 'tdb';
-      const infos = { a: 1, b: 'c', d: 'now()' };
+      const infos = { a: 1, b: 'c', d: 'NOW()' };
       const expected = "UPDATE `tdb` SET `a` = 1, `b` = 'c', `d` = NOW()";
       Sql.update(tb, infos).should.eql(expected);
     });
