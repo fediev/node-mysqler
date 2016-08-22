@@ -1,6 +1,6 @@
 {
   "name": "mysqler",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "mysql promise wrapper and helper library",
   "main": "index.js",
   "scripts": {
