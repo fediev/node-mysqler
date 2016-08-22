@@ -1,12 +1,9 @@
 /*eslint max-nested-callbacks: [2, 6] */
-'use strict';
-
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const should = chai.should();
 const mysqler = require('../index.js');
-const Connection = require('../lib/Connection');
 
 const config = require('./config.json');
 

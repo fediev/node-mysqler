@@ -1,5 +1,6 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
 const should = require('chai').should();
 const mysqler = require('../index.js');
 const Connection = require('../lib/Connection');
