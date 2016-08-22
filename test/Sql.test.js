@@ -3,10 +3,9 @@
  * @author fediev
  */
 
-/*eslint-disable id-length, no-empty-function, no-unused-expressions */
+/* eslint-disable no-empty-function, no-unused-expressions */
 
-'use strict';
-
+// eslint-disable-next-line no-unused-vars
 const should = require('chai').should();
 const Sql = require('../lib/Sql');
 
@@ -40,6 +39,16 @@ describe('Sql', () => {
     it('should get field list from length > 1 array', () => {
       const fields = ['a', 'b', 'c'];
       const expected = '`a`, `b`, `c`';
+      Sql.selectFields(fields).should.equal(expected);
+    });
+    it('should get mysql function field in array', () => {
+      const fields = ['a', 'SUM(a)', 'AVG(a)'];
+      const expected = '`a`, SUM(a), AVG(a)';
+      Sql.selectFields(fields).should.equal(expected);
+    });
+    it('should get AS alias field in array', () => {
+      const fields = ['a', 'SUM(a) AS s1', 'AVG(a) as a1'];
+      const expected = '`a`, SUM(a) AS s1, AVG(a) as a1';
       Sql.selectFields(fields).should.equal(expected);
     });
     it('should get * from object {}', () => {
